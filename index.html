@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & META -->
+    <title>La Picá de la Cubana | Sabor Caribeño en La Florida</title>
+    <meta name="description" content="La mejor fusión cubana-chilena. Titan Burgers, Congrí y Lomitos en La Florida. ¡Sabor casero y contundente!">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Rubik:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconos -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Rubik', 'sans-serif'],
+                        display: ['Lilita One', 'cursive'],
+                    },
+                    colors: {
+                        'cuba-red': '#D32F2F',    /* Rojo Bandera */
+                        'cuba-blue': '#002A8F',   /* Azul Bandera */
+                        'cuba-gold': '#FFC107',   /* Amarillo Mostaza (Comida) */
+                        'cuba-bg': '#F5F7FA',     /* Fondo Claro */
+                    },
+                    backgroundImage: {
+                        'tropical': "url('https://www.transparenttextures.com/patterns/cubes.png')",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Fondo Hero: Impactante y Sabroso */
+        .hero-bg {
+            background-image: linear-gradient(to right, rgba(0, 42, 143, 0.85), rgba(211, 47, 47, 0.7)), url('https://images.unsplash.com/photo-1550547660-d9450f859349?q=80&w=1920');
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 4px solid #D32F2F;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Acordeón */
+        .accordion-content {
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.active {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Botón con gradiente Cubano */
+        .btn-cuba {
+            background: linear-gradient(135deg, #D32F2F 0%, #B71C1C 100%);
+            color: white;
+        }
+        .btn-cuba:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(211, 47, 47, 0.4);
+        }
+
+        /* Wave Separator */
+        .wave-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        .wave-bottom svg {
+            position: relative;
+            display: block;
+            width: calc(133% + 1.3px);
+            height: 60px;
+        }
+    </style>
+</head>
+<body class="bg-cuba-bg text-gray-800 antialiased selection:bg-cuba-gold selection:text-cuba-blue">
+
+    <!-- NAVBAR -->
+    <nav class="fixed w-full z-50 top-0 bg-white/95 backdrop-blur-md shadow-md py-3 border-b-4 border-cuba-blue">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="bg-cuba-blue text-white p-2 rounded-lg shadow-lg group-hover:bg-cuba-red transition-colors duration-300">
+                    <i class="ph-fill ph-hamburger text-2xl"></i>
+                </div>
+                <div class="leading-none">
+                    <h1 class="font-display text-2xl text-cuba-red tracking-wide group-hover:text-cuba-blue transition-colors">La Picá</h1>
+                    <p class="font-sans text-xs font-bold text-gray-500 uppercase tracking-widest">De la Cubana</p>
+                </div>
+            </a>
+
+            <!-- Botones -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleLanguage()" class="hidden md:flex items-center gap-1 border-2 border-gray-200 px-3 py-1 rounded-full text-xs font-bold text-gray-600 hover:border-cuba-blue hover:text-cuba-blue transition-colors">
+                    <i class="ph-bold ph-globe"></i> <span id="lang-text">ES</span>
+                </button>
+                
+                <a href="#menu" class="bg-cuba-gold hover:bg-yellow-500 text-cuba-blue px-6 py-2 rounded-full font-bold shadow-lg transition-all flex items-center gap-2 text-sm transform hover:-translate-y-0.5">
+                    <i class="ph-bold ph-fork-knife"></i> 
+                    <span class="lang" data-es="Ver Carta" data-en="See Menu">Ver Carta</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-bg min-h-screen flex items-center justify-center relative pt-24 pb-20">
+        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+            
+            <!-- Texto Principal -->
+            <div class="text-center lg:text-left reveal active">
+                <div class="inline-flex items-center gap-2 bg-cuba-gold text-cuba-blue px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6 shadow-lg transform -rotate-2">
+                    <i class="ph-fill ph-star"></i> <span class="lang" data-es="Sabor Casero & Contundente" data-en="Homemade & Hearty Flavor">Sabor Casero & Contundente</span>
+                </div>
+                
+                <h1 class="font-display text-5xl md:text-7xl text-white mb-4 drop-shadow-xl leading-tight">
+                    <span class="lang" data-es="¡Oye Chico!" data-en="Hey Chico!">¡Oye Chico!</span> <br>
+                    <span class="text-cuba-gold">
+                        <span class="lang" data-es="Aquí se Come Rico" data-en="Eat Good Here">Aquí se Come Rico</span>
+                    </span>
+                </h1>
+                
+                <p class="text-lg text-gray-100 mb-8 font-medium leading-relaxed max-w-lg mx-auto lg:mx-0 lang" 
+                   data-es="La mejor fusión chileno-cubana en La Florida. Desde Congrí hasta nuestra famosa Titan Burger. ¡Te esperamos!"
+                   data-en="The best Chilean-Cuban fusion in La Florida. From Congrí to our famous Titan Burger. We are waiting for you!">
+                   La mejor fusión chileno-cubana en La Florida. Desde Congrí hasta nuestra famosa Titan Burger. ¡Te esperamos!
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a href="https://wa.me/56949497966" class="btn-cuba px-8 py-3 rounded-xl font-bold transition-all flex items-center justify-center gap-2 shadow-xl">
+                        <i class="ph-bold ph-whatsapp-logo"></i> <span class="lang" data-es="Pedir por WhatsApp" data-en="Order via WhatsApp">Pedir por WhatsApp</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- PANEL DE HORARIOS (Lógica Real) -->
+            <div class="relative z-10 reveal active delay-100 w-full max-w-md mx-auto">
+                <div class="bg-white rounded-2xl overflow-hidden p-1 shadow-2xl transform rotate-1 hover:rotate-0 transition-all duration-500">
+                    <!-- Cabecera Clickable -->
+                    <div class="bg-gray-50 p-6 rounded-t-xl flex items-center justify-between cursor-pointer hover:bg-gray-100 transition-colors border-b border-gray-200" onclick="toggleHours()">
+                        <div class="flex items-center gap-4">
+                            <!-- Indicador Luz -->
+                            <div class="relative">
+                                <div id="status-light" class="w-4 h-4 rounded-full bg-gray-300 ring-2 ring-white"></div>
+                                <div id="status-ping" class="absolute top-0 left-0 w-4 h-4 rounded-full bg-gray-300 animate-ping opacity-75 hidden"></div>
+                            </div>
+                            <div>
+                                <h3 id="status-text" class="font-display text-xl text-gray-800">...</h3>
+                                <p class="text-xs text-gray-500 font-bold tracking-wider uppercase lang" data-es="Estado Actual" data-en="Current Status">Estado Actual</p>
+                            </div>
+                        </div>
+                        <div class="bg-cuba-blue/10 p-2 rounded-full text-cuba-blue">
+                            <i id="chevron" class="ph-bold ph-caret-down text-xl transition-transform duration-300"></i>
+                        </div>
+                    </div>
+
+                    <!-- Lista Desplegable -->
+                    <div id="hours-list" class="accordion-content bg-white text-gray-700">
+                        <div class="p-6 space-y-3">
+                            <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                <span class="font-bold text-gray-600 lang" data-es="Mar - Vie" data-en="Tue - Fri">Mar - Vie</span>
+                                <span class="font-bold text-cuba-blue bg-blue-50 px-3 py-1 rounded-full text-xs">13:00 - 23:30</span>
+                            </div>
+                            <div class="flex justify-between items-center border-b border-gray-100 pb-2">
+                                <span class="font-bold text-gray-600 lang" data-es="Sáb - Dom" data-en="Sat - Sun">Sáb - Dom</span>
+                                <span class="font-bold text-cuba-red bg-red-50 px-3 py-1 rounded-full text-xs">14:00 - 23:30</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-bold text-gray-400 lang" data-es="Lunes" data-en="Monday">Lunes</span>
+                                <span class="font-bold text-gray-400 text-xs uppercase">Cerrado</span>
+                            </div>
+                            
+                            <div class="mt-4 pt-2 text-center">
+                                <a href="https://maps.google.com/?q=Calle+Uno+24,+La+Florida" target="_blank" class="text-xs font-bold text-cuba-blue hover:text-cuba-red flex items-center justify-center gap-1 uppercase tracking-widest transition-colors">
+                                    <i class="ph-fill ph-map-pin"></i> C. Uno 24, La Florida
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ola Decorativa -->
+        <div class="wave-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="#F5F7FA"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- MENÚ -->
+    <section id="menu" class="py-24 relative bg-cuba-bg">
+        <div class="absolute inset-0 bg-tropical opacity-5 pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-cuba-red font-bold tracking-widest uppercase text-sm mb-2 block font-sans lang" data-es="Lo más pedido" data-en="Most Ordered">Lo más pedido</span>
+                <h2 class="font-display text-5xl font-bold text-gray-800 mb-2">
+                    <span class="lang" data-es="Platos Destacados" data-en="Featured Dishes">Platos Destacados</span>
+                </h2>
+                <div class="w-24 h-2 bg-cuba-gold mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- 1. TITAN BURGER -->
+                <div class="glass-card rounded-2xl p-0 overflow-hidden group hover:-translate-y-2 transition-transform duration-300 reveal">
+                    <div class="h-60 overflow-hidden relative bg-orange-100">
+                        <div class="absolute top-3 right-3 bg-cuba-red text-white font-bold px-3 py-1 rounded-full text-xs shadow-md z-10">Popular</div>
+                        <!-- Imagen referencial de hamburguesa gigante -->
+                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=600" alt="Titan Burger" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-display text-2xl text-cuba-blue">Titan Burger</h3>
+                            <i class="ph-fill ph-fire text-cuba-red text-xl"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4 lang" data-es="Doble carne jugosa, queso derretido, lechuga fresca y tomate. ¡Un desafío monumental!" data-en="Double juicy meat, melted cheese, fresh lettuce and tomato. A monumental challenge!">Doble carne jugosa, queso derretido, lechuga fresca y tomate. ¡Un desafío monumental!</p>
+                        <button class="w-full py-2 rounded-lg bg-gray-100 text-cuba-blue font-bold hover:bg-cuba-blue hover:text-white transition-colors">Ver Detalles</button>
+                    </div>
+                </div>
+
+                <!-- 2. ALMUERZO CUBANO -->
+                <div class="glass-card rounded-2xl p-0 overflow-hidden group hover:-translate-y-2 transition-transform duration-300 reveal delay-100 border-b-4 border-cuba-blue">
+                    <div class="h-60 overflow-hidden relative bg-blue-50">
+                        <img src="https://images.unsplash.com/photo-1626804475297-411dbe631dad?q=80&w=600" alt="Almuerzo Cubano" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-display text-2xl text-cuba-blue">Almuerzo Casero</h3>
+                            <i class="ph-fill ph-fork-knife text-cuba-gold text-xl"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4 lang" data-es="El clásico Congrí (arroz con frijoles), fricasé de pollo, papas y ensalada fresca." data-en="Classic Congrí (rice with beans), chicken fricassee, potatoes and fresh salad.">El clásico Congrí (arroz con frijoles), fricasé de pollo, papas y ensalada fresca.</p>
+                        <button class="w-full py-2 rounded-lg bg-gray-100 text-cuba-blue font-bold hover:bg-cuba-blue hover:text-white transition-colors">Ver Detalles</button>
+                    </div>
+                </div>
+
+                <!-- 3. LOMITO & SOPAIPILLAS -->
+                <div class="glass-card rounded-2xl p-0 overflow-hidden group hover:-translate-y-2 transition-transform duration-300 reveal delay-200 border-b-4 border-cuba-gold">
+                    <div class="h-60 overflow-hidden relative bg-yellow-50">
+                        <img src="https://images.unsplash.com/photo-1598514983318-2f64f8f4796c?q=80&w=600" alt="Lomito" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-display text-2xl text-cuba-blue">Fusión Chilena</h3>
+                            <i class="ph-fill ph-flag text-cuba-red text-xl"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 mb-4 lang" data-es="Lomitos Chacareros contundentes y nuestras deliciosas Sopaipillas caseras." data-en="Hearty Lomitos Chacareros and our delicious homemade Sopaipillas.">Lomitos Chacareros contundentes y nuestras deliciosas Sopaipillas caseras.</p>
+                        <button class="w-full py-2 rounded-lg bg-gray-100 text-cuba-blue font-bold hover:bg-cuba-blue hover:text-white transition-colors">Ver Detalles</button>
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- Banner Aderezos -->
+            <div class="mt-16 bg-white rounded-2xl p-8 shadow-lg flex flex-col md:flex-row items-center gap-8 border-l-8 border-cuba-red reveal">
+                <div class="flex-1">
+                    <h3 class="font-display text-3xl text-gray-800 mb-2 lang" data-es="¡Salsas que Enamoran!" data-en="Sauces to Fall in Love!">¡Salsas que Enamoran!</h3>
+                    <p class="text-gray-600 lang" data-es="Prueba nuestro ají casero y mayonesa especial. El toque secreto de la casa." data-en="Try our homemade chili and special mayonnaise. The house secret touch.">Prueba nuestro ají casero y mayonesa especial. El toque secreto de la casa.</p>
+                </div>
+                <div class="flex gap-4">
+                     <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center text-green-600 font-bold border-2 border-green-500 shadow-sm" title="Ají">AJÍ</div>
+                     <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center text-yellow-600 font-bold border-2 border-yellow-500 shadow-sm" title="Mayo">MAYO</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-white pt-16 pb-12 border-t-4 border-cuba-gold">
+        <div class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+            
+            <div class="text-center md:text-left">
+                <div class="flex items-center justify-center md:justify-start gap-3 mb-6">
+                     <i class="ph-fill ph-flag text-cuba-red text-3xl"></i>
+                    <h3 class="font-display text-3xl text-white">La Picá de la Cubana</h3>
+                </div>
+                
+                <div class="space-y-4 text-gray-400 text-sm font-medium">
+                    <p class="flex items-center justify-center md:justify-start gap-3 hover:text-white transition-colors">
+                        <i class="ph-fill ph-map-pin text-cuba-gold text-xl"></i>
+                        Calle Uno 24, La Florida, RM
+                    </p>
+                    <p class="flex items-center justify-center md:justify-start gap-3 hover:text-white transition-colors">
+                        <i class="ph-fill ph-phone text-cuba-blue text-xl"></i>
+                        +56 9 4949 7966
+                    </p>
+                    <div class="flex items-start justify-center md:justify-start gap-3">
+                        <i class="ph-fill ph-clock text-cuba-red text-xl"></i>
+                        <div class="text-left">
+                            <p class="lang" data-es="Mar-Vie: 13:00 - 23:30" data-en="Tue-Fri: 13:00 - 23:30">Mar-Vie: 13:00 - 23:30</p>
+                            <p class="lang" data-es="Sáb-Dom: 14:00 - 23:30" data-en="Sat-Sun: 14:00 - 23:30">Sáb-Dom: 14:00 - 23:30</p>
+                            <p class="text-cuba-red text-xs mt-1 lang" data-es="Lunes Cerrado" data-en="Closed on Mondays">Lunes Cerrado</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 flex justify-center md:justify-start gap-4">
+                     <a href="https://facebook.com" class="bg-white/10 hover:bg-[#1877F2] p-2 rounded-full transition-colors"><i class="ph-fill ph-facebook-logo text-xl"></i></a>
+                </div>
+            </div>
+
+            <!-- Mapa Estático -->
+            <div class="rounded-xl overflow-hidden h-64 border-4 border-white/10 relative shadow-2xl grayscale hover:grayscale-0 transition-all duration-500">
+                 <iframe 
+                    src="https://maps.google.com/maps?q=Calle+Uno+24,+La+Florida,+Chile&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                    width="100%" 
+                    height="100%" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                 </iframe>
+            </div>
+
+        </div>
+        <div class="text-center mt-12 text-xs text-gray-500 font-bold uppercase tracking-widest">
+            &copy; 2026 La Picá de la Cubana. <span class="text-cuba-red">❤</span>
+        </div>
+    </footer>
+
+    <!-- BOTONES FLOTANTES -->
+    <div class="fixed bottom-6 right-6 z-50 flex flex-col gap-4 items-end">
+        
+        <!-- Botón Llamar (Solo Móvil) -->
+        <a href="tel:+56949497966" class="md:hidden w-14 h-14 bg-white text-cuba-blue rounded-full shadow-lg flex items-center justify-center border-2 border-cuba-gold hover:scale-110 transition-transform duration-300">
+            <i class="ph-fill ph-phone-call text-2xl animate-pulse text-cuba-red"></i>
+        </a>
+
+        <!-- Botón WhatsApp (Principal) -->
+        <a href="https://wa.me/56949497966?text=Hola,%20quiero%20hacer%20un%20pedido." target="_blank" class="group relative w-16 h-16 bg-[#25D366] text-white rounded-full shadow-2xl flex items-center justify-center hover:scale-110 transition-transform duration-300 hover:shadow-[0_10px_30px_rgba(37,211,102,0.4)] border-4 border-white">
+            <i class="ph-fill ph-whatsapp-logo text-3xl"></i>
+            
+            <!-- Tooltip -->
+            <span class="absolute right-full mr-4 bg-cuba-blue text-white px-4 py-2 rounded-xl text-xs font-bold shadow-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none hidden md:block uppercase tracking-wide border border-cuba-gold">
+                <span class="lang" data-es="¡Haz tu pedido!" data-en="Order now!">¡Haz tu pedido!</span>
+            </span>
+        </a>
+    </div>
+
+    <!-- LÓGICA -->
+    <script>
+        // 1. SCROLL REVEAL
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // 2. TOGGLE HORARIOS
+        function toggleHours() {
+            const list = document.getElementById('hours-list');
+            const chevron = document.getElementById('chevron');
+            list.classList.toggle('active');
+            
+            if (list.classList.contains('active')) {
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // 3. LOGICA HORARIOS (Lunes Cerrado, Martes-Viernes 13:00, Sab-Dom 14:00)
+        function checkStatus() {
+            try {
+                // Zona Horaria Chile: America/Santiago
+                const now = new Date();
+                const formatter = new Intl.DateTimeFormat('en-US', {
+                    timeZone: 'America/Santiago',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    weekday: 'short',
+                    hour12: false
+                });
+
+                const parts = formatter.formatToParts(now);
+                const hour = parseInt(parts.find(p => p.type === 'hour').value);
+                const minute = parseInt(parts.find(p => p.type === 'minute').value);
+                const day = parts.find(p => p.type === 'weekday').value; // Mon, Tue...
+                const currentTime = hour + (minute / 60);
+
+                let isOpen = false;
+
+                // Lunes: Cerrado
+                if (day === 'Mon') {
+                    isOpen = false;
+                }
+                // Martes a Viernes: 13:00 - 23:30 (23.5)
+                else if (['Tue', 'Wed', 'Thu', 'Fri'].includes(day)) {
+                    if (currentTime >= 13 && currentTime < 23.5) {
+                        isOpen = true;
+                    }
+                }
+                // Sábado y Domingo: 14:00 - 23:30 (23.5)
+                else if (['Sat', 'Sun'].includes(day)) {
+                    if (currentTime >= 14 && currentTime < 23.5) {
+                        isOpen = true;
+                    }
+                }
+
+                const lang = document.getElementById('lang-text').innerText;
+                const light = document.getElementById('status-light');
+                const ping = document.getElementById('status-ping');
+                const text = document.getElementById('status-text');
+
+                if (isOpen) {
+                    light.className = "w-4 h-4 rounded-full bg-green-500 ring-2 ring-white shadow-lg";
+                    ping.classList.remove('hidden');
+                    text.innerText = lang === 'ES' ? "ABIERTO ¡A COMER!" : "OPEN EAT NOW!";
+                    text.className = "font-display text-xl text-green-600 tracking-wide";
+                } else {
+                    light.className = "w-4 h-4 rounded-full bg-cuba-red ring-2 ring-white shadow-lg";
+                    ping.classList.add('hidden');
+                    text.innerText = lang === 'ES' ? "CERRADO" : "CLOSED";
+                    text.className = "font-display text-xl text-cuba-red tracking-wide";
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        // 4. IDIOMA
+        function toggleLanguage() {
+            const btn = document.getElementById('lang-text');
+            const isSpanish = btn.innerText === 'ES';
+            const target = isSpanish ? 'en' : 'es';
+            
+            btn.innerText = isSpanish ? 'EN' : 'ES';
+
+            document.querySelectorAll('.lang').forEach(el => {
+                if (el.dataset[target]) {
+                    el.style.opacity = '0';
+                    setTimeout(() => {
+                        el.innerText = el.dataset[target];
+                        el.style.opacity = '1';
+                    }, 200);
+                }
+            });
+            setTimeout(checkStatus, 200);
+        }
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            reveal();
+            checkStatus();
+        });
+        
+        setInterval(checkStatus, 60000);
+    </script>
+</body>
+</html>
